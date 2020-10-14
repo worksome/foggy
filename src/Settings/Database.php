@@ -12,14 +12,8 @@ use stdClass;
  */
 class Database
 {
-    /** @var stdClass */
-    protected $settings;
+    protected stdClass $settings;
 
-    /**
-     * Database constructor.
-     *
-     * @param stdClass $settings
-     */
     public function __construct(stdClass $settings)
     {
         $this->settings = $settings;
@@ -28,8 +22,6 @@ class Database
     /**
      * Returns the table setting class which matches string parsed.
      *
-     * @param string $table
-     * @return Table
      * @throws InvalidArgumentException
      */
     public function getTable(string $table): Table

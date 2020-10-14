@@ -14,10 +14,9 @@ use Worksome\Foggy\Rules\ReplaceRule;
  */
 class Rule
 {
-    /** @var stdClass */
-    protected $settings;
+    protected stdClass $settings;
 
-    protected $timesRan = 0;
+    protected int $timesRan = 0;
 
     public const RULE_MAP = [
         'faker'   => FakerRule::class,
@@ -25,11 +24,6 @@ class Rule
         'replace' => ReplaceRule::class,
     ];
 
-    /**
-     * Rule constructor.
-     *
-     * @param stdClass $settings
-     */
     public function __construct(stdClass $settings)
     {
         $this->settings = $settings;
@@ -102,9 +96,6 @@ class Rule
         return $this->getType()::handle($this, $db, $row, $value);
     }
 
-    /**
-     * @return stdClass
-     */
     public function getSettings(): stdClass
     {
         return $this->settings;
