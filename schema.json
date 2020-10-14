@@ -1,0 +1,71 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"type": "object",
+	"title": "The Root Schema",
+	"required": [
+		"database"
+	],
+	"definitions": {
+		"table": {
+			"type": "object",
+			"properties": {
+				"withData" : {
+					"type": "boolean"
+				},
+				"rules" : {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/rule"
+					}
+				}
+			},
+			"required": [
+				"withData"
+			]
+		},
+		"rule": {
+			"type": "object",
+			"properties": {
+				"column": {
+					"type": "string"
+				},
+				"type": {
+					"enum": [
+						"faker",
+						"php",
+						"replace"
+					]
+				},
+				"value": {
+					"type": "string"
+				},
+				"condition": {
+					"type": "string"
+				},
+				"times": {
+					"type": "integer"
+				},
+				"params": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"column",
+				"type",
+				"value"
+			]
+		}
+	},
+	"properties": {
+		"database": {
+			"$id": "#/properties/database",
+			"type": "object",
+			"title": "Holds all information of how the database should be dumped",
+			"patternProperties": {
+				"^.*$": {
+					"$ref": "#/definitions/table"
+				}
+			}
+		}
+	}
+}

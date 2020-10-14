@@ -1,0 +1,32 @@
+{
+    "name": "worksome/foggy",
+    "description": "Foggy is a tool for making database dumps with some data removed/changed.",
+    "authors": [
+        {
+            "name": "Oliver Nybroe",
+            "email": "oliver@worksome.com"
+        }
+    ],
+    "license": ["MIT"],
+    "bin": [
+        "bin/foggy"
+    ],
+    "require": {
+        "php": ">=7.4",
+        "doctrine/dbal": "^2.9|^2.8|^2.7",
+        "symfony/console": "^4.0.0",
+        "fzaninotto/faker": "^1.8",
+        "symfony/var-dumper": "^4.2",
+        "ext-json": "*",
+        "thecodingmachine/safe": "^0.1.15",
+		"ext-pdo": "*"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Worksome\\Foggy\\": "src/"
+        }
+    }
+}
