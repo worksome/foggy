@@ -19,29 +19,16 @@ use function Safe\json_decode;
  */
 class DumpProcess
 {
-    /**
-     * @var Settings
-     */
-    private $config;
+    private Settings $config;
 
-    /**
-     * @var Connection
-     */
-    private $db;
+    private Connection $db;
 
-    /**
-     * @var OutputInterface
-     */
-    private $dumpOutput;
+    private OutputInterface $dumpOutput;
 
-    /** @var ConsoleOutput */
-    private $consoleOutput;
+    private ConsoleOutput $consoleOutput;
 
     /**
      * @param string|Connection  $dsn
-     * @param string             $config
-     * @param OutputInterface    $dumpOutput
-     * @param ConsoleOutput|null $consoleOutput
      * @throws DBALException
      * @throws JsonException
      */
@@ -69,7 +56,7 @@ class DumpProcess
      *
      * @throws DBALException
      */
-    public function run()
+    public function run(): void
     {
         $dumper = new Dumper(
             $this->dumpOutput,

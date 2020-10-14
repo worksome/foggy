@@ -11,17 +11,11 @@ use Worksome\Foggy\Rules\ConditionValidator;
  */
 class Table
 {
-    /** @var stdClass */
-    protected $settings;
+    protected stdClass $settings;
 
     /** @var array<Rule> */
-    protected $rules;
+    protected array $rules;
 
-    /**
-     * Table constructor.
-     *
-     * @param stdClass $settings
-     */
     public function __construct(stdClass $settings)
     {
         $this->settings = $settings;

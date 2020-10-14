@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class FoggyCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('foggy:dump')
             ->setDescription('Dumps a database based on rules')
@@ -33,18 +33,16 @@ class FoggyCommand extends Command
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     * @return int|null|void
      * @throws DBALException
      * @throws JsonException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $dsn = $input->getArgument('dsn');
         $configFile = $input->getArgument('config');
 
         $process = new DumpProcess($dsn, $configFile, $output);
         $process->run();
+        return 0;
     }
 }

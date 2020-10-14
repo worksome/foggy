@@ -16,35 +16,18 @@ use Worksome\Foggy\Settings\Table;
  */
 class Dumper
 {
-    /** @var OutputInterface */
-    protected $dumpOutput;
+    protected OutputInterface $dumpOutput;
 
-    /** @var OutputInterface */
-    protected $consoleOutput;
+    protected OutputInterface $consoleOutput;
 
-    /**
-     * @var int defaults to 10MB
-     */
-    protected $bufferSize = 10485760;
+    protected int $bufferSize = 10485760;
 
-    /**
-     * Dumper constructor.
-     *
-     * @param OutputInterface $dumpOutput
-     * @param OutputInterface $consoleOutput
-     */
     public function __construct(OutputInterface $dumpOutput, OutputInterface $consoleOutput)
     {
         $this->dumpOutput = $dumpOutput;
         $this->consoleOutput = $consoleOutput;
     }
 
-    /**
-     * Writes a line to the specified dump output interface.
-     *
-     * @param string $message
-     * @param bool   $newLine
-     */
     public function dumpLine(string $message, bool $newLine = false): void
     {
         $this->dumpOutput->write($message, $newLine, OutputInterface::OUTPUT_RAW);
@@ -52,8 +35,6 @@ class Dumper
 
     /**
      * Writes a new line to the specified dump output interface.
-     *
-     * @param string $message
      */
     public function dumpNewLine(string $message = ''): void
     {
@@ -62,11 +43,8 @@ class Dumper
 
     /**
      * Creates a instance of a progress bar in the specified console output interface.
-     *
-     * @param int $max
-     * @return ProgressBar
      */
-    public function createProgressBar(int $max = 1)
+    public function createProgressBar(int $max = 1): ProgressBar
     {
         $progress = new ProgressBar($this->consoleOutput, $max);
         $progress->setOverwrite(true);
@@ -80,7 +58,7 @@ class Dumper
      *
      * Most of the variables are taken from a default mysqldump script.
      */
-    public function dumpConfiguration()
+    public function dumpConfiguration(): void
     {
         $this->dumpNewLine('/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;');
         $this->dumpNewLine('/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;');
@@ -103,7 +81,7 @@ class Dumper
      *
      * @see Dumper::dumpConfiguration()
      */
-    public function dumpResetConfiguration()
+    public function dumpResetConfiguration(): void
     {
         $this->dumpNewLine('/*!40101 SET character_set_client = @saved_cs_client */;');
         $this->dumpNewLine('/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;');
@@ -119,11 +97,9 @@ class Dumper
     /**
      * Dumps the schema definition of the table.
      *
-     * @param string     $table name of the table
-     * @param Connection $db
      * @throws DBALException
      */
-    public function dumpSchema(string $table, Connection $db)
+    public function dumpSchema(string $table, Connection $db): void
     {
         $this->keepalive($db);
         $this->dumpNewLine("-- BEGIN STRUCTURE `$table`");
@@ -151,12 +127,9 @@ class Dumper
     /**
      * Dumps the data for the specified table based on the settings for the Table.
      *
-     * @param            $table
-     * @param Table      $tableSettings
-     * @param Connection $db
      * @throws DBALException
      */
-    public function dumpData(string $table, Table $tableSettings, Connection $db)
+    public function dumpData(string $table, Table $tableSettings, Connection $db): void
     {
         $this->keepalive($db);
         $cols = $this->getColumnsForTable($table, $db);
@@ -243,12 +216,8 @@ class Dumper
 
     /**
      * Returns all columns for a table.
-     *
-     * @param string     $table
-     * @param Connection $db
-     * @return array
      */
-    protected function getColumnsForTable(string $table, Connection $db)
+    protected function getColumnsForTable(string $table, Connection $db): array
     {
         $columns = [];
         foreach ($db->fetchAll("SHOW COLUMNS FROM `$table`") as $row) {
@@ -259,20 +228,14 @@ class Dumper
     }
 
     /**
-     * @param string $table
      * @param array(string=>mixed) $cols
-     * @return string
      */
-    protected function insertValuesStatement($table, $cols)
+    protected function insertValuesStatement($table, $cols): string
     {
         return "INSERT INTO `$table` (`" . implode('`, `', array_keys($cols)) . '`) VALUES ';
     }
 
-    /**
-     * @param array $row
-     * @return int
-     */
-    protected function rowLengthEstimate(array $row)
+    protected function rowLengthEstimate(array $row): int
     {
         $l = 0;
         foreach ($row as $value) {
@@ -282,7 +245,7 @@ class Dumper
         return $l;
     }
 
-    private function keepalive(Connection $db)
+    private function keepalive(Connection $db): void
     {
         if (false === $db->ping()) {
             $db->close();

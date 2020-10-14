@@ -12,14 +12,8 @@ use stdClass;
  */
 class Settings
 {
-    /** @var stdClass */
-    protected $settings;
+    protected stdClass $settings;
 
-    /**
-     * Settings constructor.
-     *
-     * @param stdClass $settings
-     */
     public function __construct(stdClass $settings)
     {
         $this->settings = $settings;
