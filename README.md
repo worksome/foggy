@@ -52,7 +52,7 @@ It shows a quick example of some rules and parameters.
       "withData": true,
       "rules": [
         {
-          "__comment": "Generate a fake name for all users, except if they are our own employees"
+          "__comment": "Generate a fake name for all users, except if they are our own employees",
           "column": "name",
           "type": "faker",
           "value": "name",
