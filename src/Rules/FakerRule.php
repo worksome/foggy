@@ -9,10 +9,9 @@ use Worksome\Foggy\Settings\Rule as SettingsRule;
 
 class FakerRule implements Rule
 {
-    /** @var FakerGenerator */
-    protected static $faker;
+    protected static FakerGenerator $faker;
 
-    public static function faker()
+    public static function faker(): FakerGenerator
     {
         if (self::$faker === null) {
             return FakerFactory::create();
@@ -28,16 +27,13 @@ class FakerRule implements Rule
 
         $result = self::faker()->{array_shift($values)}(...array_shift($params));
 
-        foreach ($values as $key => $value) {
-            $result = $result->{$value}(...$params[$key]);
+        foreach ($values as $key => $ruleName) {
+            $result = $result->{$ruleName}(...$params[$key]);
         }
 
         return $db->quote($result);
     }
 
-    /**
-     * @param FakerGenerator $faker
-     */
     public static function setFaker(FakerGenerator $faker): void
     {
         self::$faker = $faker;

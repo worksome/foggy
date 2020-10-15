@@ -4,6 +4,7 @@
 
 ## [Unreleased]
 ### Added
+- Created some Pest tests
 
 ### Changed
 
