@@ -4,10 +4,8 @@
 
 ## [Unreleased]
 ### Added
-- Created some Pest tests
 
 ### Changed
-- Bump symfony/var-dumper to ^5.1
 
 ### Deprecated
 
@@ -16,6 +14,13 @@
 ### Fixed
 
 ### Security
+
+## [0.2.0]
+### Added
+- Created some Pest tests
+
+### Changed
+- Bump symfony/var-dumper to ^5.1
 
 ## [0.1.0]
 ### Added
