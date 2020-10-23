@@ -16,6 +16,6 @@
 
 ### Security
 
-## [0.1]
+## [0.1.0]
 ### Added
 - Initial release
