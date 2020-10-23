@@ -8,12 +8,13 @@ For installation via composer
 $ composer require worksome/foggy
 ````
 
-For installation in a Laravel application (NOT YET CREATED)
+For installation in a Laravel application
 ```bash
 $ composer require worksome/foggy-laravel
 ```
 
 ## Usage
+For usage with Laravel, read more in [Laravel Foggy docs](https://github.com/worksome/foggy-laravel#usage).
 
 
 ## Configuration
