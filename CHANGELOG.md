@@ -7,6 +7,7 @@
 - Created some Pest tests
 
 ### Changed
+- Bump symfony/var-dumper to ^5.1
 
 ### Deprecated
 

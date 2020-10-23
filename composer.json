@@ -16,7 +16,7 @@
         "doctrine/dbal": "^2.9|^2.8|^2.7",
         "symfony/console": "^5.1",
         "fzaninotto/faker": "^1.8",
-        "symfony/var-dumper": "^4.2",
+        "symfony/var-dumper": "^5.1",
         "ext-json": "*",
         "thecodingmachine/safe": "^0.1.15",
 		"ext-pdo": "*"
