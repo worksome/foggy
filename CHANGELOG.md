@@ -15,6 +15,10 @@
 
 ### Security
 
+## [0.2.1]
+### Changed
+- Replaced `fzaninotto/faker` with `fakerphp/faker`
+
 ## [0.2.0]
 ### Added
 - Created some Pest tests
