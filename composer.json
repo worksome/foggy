@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "doctrine/dbal": "^2.9|^2.8|^2.7",
+        "doctrine/dbal": "^3.0.0",
         "symfony/console": "^5.1",
         "symfony/var-dumper": "^5.1",
         "ext-json": "*",
