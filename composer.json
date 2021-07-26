@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "doctrine/dbal": "^3.0.0",
+        "doctrine/dbal": "^3.1",
         "symfony/console": "^5.1",
         "symfony/var-dumper": "^5.1",
         "ext-json": "*",
@@ -23,7 +23,7 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
-        "pestphp/pest": "^1.0.0",
+        "pestphp/pest": "^1.1",
         "mockery/mockery": "^1.4"
     },
     "autoload": {

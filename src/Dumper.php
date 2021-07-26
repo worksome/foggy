@@ -3,8 +3,8 @@
 namespace Worksome\Foggy;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
-use Doctrine\DBAL\Driver\PDOConnection;
+use Doctrine\DBAL\Driver\PDO\Connection as PdoConnection;
+use Doctrine\DBAL\Exception as DbalException;
 use PDO;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -96,18 +96,16 @@ class Dumper
 
     /**
      * Dumps the schema definition of the table.
-     *
-     * @throws DBALException
+     * @throws DbalException
      */
     public function dumpSchema(string $table, Connection $db): void
     {
-        $this->keepalive($db);
         $this->dumpNewLine("-- BEGIN STRUCTURE `$table`");
         $this->dumpNewLine("DROP TABLE IF EXISTS `$table`;");
         $this->dumpNewLine('/*!40101 SET @saved_cs_client     = @@character_set_client */;');
         $this->dumpNewLine('SET character_set_client = utf8mb4;');
 
-        $tableCreationCommand = $db->fetchColumn("SHOW CREATE TABLE `$table`", [], 1);
+        $tableCreationCommand = $db->fetchNumeric("SHOW CREATE TABLE `$table`", [])[1];
 
         $this->dumpNewLine($tableCreationCommand . ';');
         $this->dumpNewLine();
@@ -127,11 +125,10 @@ class Dumper
     /**
      * Dumps the data for the specified table based on the settings for the Table.
      *
-     * @throws DBALException
+     * @throws DbalException
      */
     public function dumpData(string $table, Table $tableSettings, Connection $db): void
     {
-        $this->keepalive($db);
         $cols = $this->getColumnsForTable($table, $db);
 
         $selectQuery = 'SELECT ';
@@ -152,9 +149,9 @@ class Dumper
 
         $bufferSize = 0;
         $max = $this->bufferSize;
-        $numRows = $db->fetchColumn("SELECT COUNT(*) FROM `{$table}` {$tableSettings->getWhere()}");
+        $numRows = $db->fetchOne("SELECT COUNT(*) FROM `{$table}` {$tableSettings->getWhere()}");
 
-        // If no data, just exist.
+        // If no data, just exit.
         if ($numRows == 0) {
             return;
         }
@@ -164,11 +161,12 @@ class Dumper
         $progress->setRedrawFrequency(max($numRows / 100, 1));
         $progress->start();
 
-        /** @var PDOConnection $wrappedConnection */
+        /** @var PdoConnection $wrappedConnection */
         $wrappedConnection = $db->getWrappedConnection();
-        $wrappedConnection->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
+        $pdo = $wrappedConnection->getWrappedConnection();
+        $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
 
-        foreach ($db->query($selectQuery) as $row) {
+        foreach ($db->executeQuery($selectQuery)->iterateAssociative() as $row) {
             $b = $this->rowLengthEstimate($row);
 
             // Start a new statement to ensure that the line does not get too long.
@@ -205,7 +203,7 @@ class Dumper
             $this->consoleOutput->getErrorOutput()->write("\n"); // write a newline after the progressbar.
         }
 
-        $wrappedConnection->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+        $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
 
         if ($bufferSize) {
             $this->dumpNewLine(';');
@@ -216,11 +214,12 @@ class Dumper
 
     /**
      * Returns all columns for a table.
+     * @throws DbalException
      */
     protected function getColumnsForTable(string $table, Connection $db): array
     {
         $columns = [];
-        foreach ($db->fetchAll("SHOW COLUMNS FROM `$table`") as $row) {
+        foreach ($db->fetchAllAssociative("SHOW COLUMNS FROM `$table`") as $row) {
             $columns[$row['Field']] = $row['Type'];
         }
 
@@ -243,13 +242,5 @@ class Dumper
         }
 
         return $l;
-    }
-
-    private function keepalive(Connection $db): void
-    {
-        if (false === $db->ping()) {
-            $db->close();
-            $db->connect();
-        }
     }
 }

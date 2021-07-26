@@ -2,7 +2,6 @@
 
 namespace Worksome\Foggy;
 
-use Doctrine\DBAL\DBALException;
 use Safe\Exceptions\JsonException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -33,7 +32,6 @@ class FoggyCommand extends Command
     }
 
     /**
-     * @throws DBALException
      * @throws JsonException
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
