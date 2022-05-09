@@ -14,8 +14,8 @@
     "require": {
         "php": "^7.4|^8.0",
         "doctrine/dbal": "^3.1",
-        "symfony/console": "^5.1",
-        "symfony/var-dumper": "^5.1",
+        "symfony/console": "^5.1|^6.0",
+        "symfony/var-dumper": "^5.1|^6.0",
         "ext-json": "*",
         "thecodingmachine/safe": "^2.0",
 		"ext-pdo": "*",
@@ -41,5 +41,10 @@
         "test": [
             "@test:pest"
         ]
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     }
 }
