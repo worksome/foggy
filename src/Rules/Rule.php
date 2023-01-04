@@ -21,6 +21,7 @@ interface Rule
      * @param Connection   $db
      * @param array        $row
      * @param string       $value
+     *
      * @return string
      */
     public static function handle(SettingsRule $rule, Connection $db, array $row, string $value): string;

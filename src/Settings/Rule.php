@@ -61,7 +61,7 @@ class Rule
 
     public function getParameters(): array
     {
-        if (!isset($this->settings->params)) {
+        if (! isset($this->settings->params)) {
             return [[]];
         }
 
@@ -84,7 +84,7 @@ class Rule
      */
     public function getType(): string
     {
-        if (!isset(self::RULE_MAP[$this->settings->type])) {
+        if (! isset(self::RULE_MAP[$this->settings->type])) {
             throw new InvalidArgumentException("Cannot handle rule of type [{$this->settings->type}]");
         }
 

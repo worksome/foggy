@@ -7,9 +7,6 @@ use Symfony\Component\Console\Command\HelpCommand;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 
-/**
- * Class FoggyApplication.
- */
 class FoggyApplication extends Application
 {
     /**
@@ -26,8 +23,8 @@ class FoggyApplication extends Application
     protected function getDefaultCommands(): array
     {
         return [
-            new HelpCommand,
-            new FoggyCommand,
+            new HelpCommand(),
+            new FoggyCommand(),
         ];
     }
 

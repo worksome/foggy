@@ -55,9 +55,9 @@ class Table
 
     /**
      * @param string     $columnName
-     * @param            $value
      * @param Connection $db
      * @param array      $row
+     *
      * @return string
      */
     public function getStringForInsertStatement(string $columnName, $value, Connection $db, array $row)
@@ -67,7 +67,7 @@ class Table
         } elseif ($value === '') {
             return '""';
         } else {
-            if (!empty($rules = $this->getRulesWithPassedCondition($columnName, $row))) {
+            if (! empty($rules = $this->getRulesWithPassedCondition($columnName, $row))) {
                 foreach ($rules as $rule) {
                     $value = $rule->processRow($value, $row, $db);
                 }
@@ -82,6 +82,7 @@ class Table
     /**
      * @param string $column
      * @param array  $row
+     *
      * @return array<Rule>
      */
     protected function getRulesWithPassedCondition(string $column, array $row): array
@@ -89,7 +90,7 @@ class Table
         $rules = $this->findRules($column);
 
         $rules = array_filter($rules, function (Rule $rule) use ($row) {
-            return !$rule->hasCondition() || ConditionValidator::passes($rule, $row);
+            return ! $rule->hasCondition() || ConditionValidator::passes($rule, $row);
         });
 
         return $rules;

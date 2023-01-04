@@ -27,7 +27,8 @@ class DumpProcess
     private ConsoleOutput $consoleOutput;
 
     /**
-     * @param string|Connection  $dsn
+     * @param string|Connection $dsn
+     *
      * @throws JsonException|DbalException
      */
     public function __construct($dsn, string $config, OutputInterface $dumpOutput, ConsoleOutput $consoleOutput = null)
@@ -50,6 +51,7 @@ class DumpProcess
 
     /**
      * The method used to run the process.
+     *
      * @throws DbalException
      */
     public function run(): void

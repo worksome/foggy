@@ -9,6 +9,7 @@ class ConditionValidator
     /**
      * @param Rule  $rule
      * @param array $row
+     *
      * @return bool
      */
     public static function passes(Rule $rule, array $row): bool
@@ -19,7 +20,7 @@ class ConditionValidator
 
         $passesCondition = eval("return {$rule->getCondition()};");
 
-        if (!$passesCondition) {
+        if (! $passesCondition) {
             return false;
         }
 

@@ -11,9 +11,6 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Worksome\Foggy\Settings\Table;
 
-/**
- * Class Dumper.
- */
 class Dumper
 {
     protected OutputInterface $dumpOutput;
@@ -96,6 +93,7 @@ class Dumper
 
     /**
      * Dumps the schema definition of the table.
+     *
      * @throws DbalException
      */
     public function dumpSchema(string $table, Connection $db): void
@@ -134,7 +132,7 @@ class Dumper
         $selectQuery = 'SELECT ';
         $first = true;
         foreach (array_keys($cols) as $name) {
-            if (!$first) {
+            if (! $first) {
                 $selectQuery .= ', ';
             }
 
@@ -186,7 +184,7 @@ class Dumper
             $this->dumpLine('(');
 
             foreach ($row as $name => $value) {
-                if (!$firstCol) {
+                if (! $firstCol) {
                     $this->dumpLine(', ');
                 }
 
@@ -214,6 +212,7 @@ class Dumper
 
     /**
      * Returns all columns for a table.
+     *
      * @throws DbalException
      */
     protected function getColumnsForTable(string $table, Connection $db): array
