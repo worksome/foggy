@@ -12,19 +12,20 @@
         "bin/foggy"
     ],
     "require": {
-        "php": "^7.4|^8.0",
-        "doctrine/dbal": "^3.1",
-        "symfony/console": "^5.1|^6.0",
-        "symfony/var-dumper": "^5.1|^6.0",
+        "php": "^8.2",
         "ext-json": "*",
+        "ext-pdo": "*",
+        "doctrine/dbal": "^3.1",
+        "symfony/console": "^6.2",
+        "symfony/var-dumper": "^6.2",
         "thecodingmachine/safe": "^2.0",
-		"ext-pdo": "*",
         "fakerphp/faker": "^1.10"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-master",
-        "pestphp/pest": "^1.1",
-        "mockery/mockery": "^1.4"
+        "roave/security-advisories": "dev-latest",
+        "pestphp/pest": "^1.22.3",
+        "mockery/mockery": "^1.5.1",
+        "worksome/coding-style": "^2.3"
     },
     "autoload": {
         "psr-4": {
@@ -37,14 +38,19 @@
         }
     },
     "scripts": {
+        "lint": "vendor/bin/ecs --fix",
         "test:pest" : "vendor/bin/pest",
+        "test:style": "vendor/bin/ecs",
         "test": [
+            "@test:style",
             "@test:pest"
         ]
     },
     "config": {
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "worksome/coding-style": true
         }
     }
 }

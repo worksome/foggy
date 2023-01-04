@@ -5,7 +5,6 @@ namespace Worksome\Foggy\Tests\Rules;
 use Doctrine\DBAL\Connection;
 use Mockery;
 use Worksome\Foggy\Rules\PhpRule;
-use Worksome\Foggy\Rules\ReplaceRule;
 use Worksome\Foggy\Settings\Rule;
 
 it('can evaluate php string', function () {
