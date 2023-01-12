@@ -5,6 +5,7 @@ namespace Worksome\Foggy;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\PDO\Connection as PdoConnection;
 use Doctrine\DBAL\Exception as DbalException;
+use Doctrine\DBAL\Schema\View;
 use PDO;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -96,8 +97,10 @@ class Dumper
      *
      * @throws DbalException
      */
-    public function dumpSchema(string $table, Connection $db): void
-    {
+    public function dumpTableSchema(
+        string $table,
+        Connection $db,
+    ): void {
         $this->dumpNewLine("-- BEGIN STRUCTURE `$table`");
         $this->dumpNewLine("DROP TABLE IF EXISTS `$table`;");
         $this->dumpNewLine('/*!40101 SET @saved_cs_client     = @@character_set_client */;');
@@ -108,15 +111,33 @@ class Dumper
         $this->dumpNewLine($tableCreationCommand . ';');
         $this->dumpNewLine();
 
+        $this->showDumpingSchemaProgress($table);
+    }
+
+    public function dumpViewSchema(View $view): void
+    {
+        $this->dumpNewLine("-- BEGIN STRUCTURE `{$view->getName()}`");
+        $this->dumpNewLine("DROP VIEW IF EXISTS `{$view->getName()}`;");
+        $this->dumpNewLine('/*!40101 SET @saved_cs_client     = @@character_set_client */;');
+        $this->dumpNewLine('SET character_set_client = utf8mb4;');
+
+        $this->dumpNewLine("CREATE VIEW `{$view->getName()}` AS {$view->getSql()};");
+        $this->dumpNewLine();
+        $this->showDumpingSchemaProgress($view->getName());
+    }
+
+    private function showDumpingSchemaProgress(string $schema): void
+    {
         $progress = $this->createProgressBar(1);
-        $progress->setFormat("Dumping schema <fg=cyan>$table</>: <fg=yellow>%percent:3s%%</>");
+        $progress->setFormat("Dumping schema <fg=cyan>$schema</>: <fg=yellow>%percent:3s%%</>");
         $progress->setOverwrite(true);
         $progress->setRedrawFrequency(1);
         $progress->start();
-        $progress->setFormat("Dumping schema <fg=green>$table</>: <fg=green>%percent:3s%%</> Took: %elapsed%");
+        $progress->setFormat("Dumping schema <fg=green>$schema</>: <fg=green>%percent:3s%%</> Took: %elapsed%");
         $progress->finish();
         if ($this->consoleOutput instanceof ConsoleOutput) {
-            $this->consoleOutput->getErrorOutput()->writeln(''); // write a newline after the progressbar.
+            $this->consoleOutput->getErrorOutput()
+                ->writeln(''); // write a newline after the progressbar.
         }
     }
 
@@ -125,8 +146,11 @@ class Dumper
      *
      * @throws DbalException
      */
-    public function dumpData(string $table, Table $tableSettings, Connection $db): void
-    {
+    public function dumpData(
+        string $table,
+        Table $tableSettings,
+        Connection $db,
+    ): void {
         $cols = $this->getColumnsForTable($table, $db);
 
         $selectQuery = 'SELECT ';
@@ -155,7 +179,9 @@ class Dumper
         }
 
         $progress = $this->createProgressBar($numRows);
-        $progress->setFormat("Dumping data <fg=cyan>$table</>: <fg=yellow>%percent:3s%%</> %remaining% / %estimated%");
+        $progress->setFormat(
+            "Dumping data <fg=cyan>$table</>: <fg=yellow>%percent:3s%%</> %remaining% / %estimated%"
+        );
         $progress->setRedrawFrequency(max($numRows / 100, 1));
         $progress->start();
 
@@ -215,8 +241,10 @@ class Dumper
      *
      * @throws DbalException
      */
-    protected function getColumnsForTable(string $table, Connection $db): array
-    {
+    protected function getColumnsForTable(
+        string $table,
+        Connection $db,
+    ): array {
         $columns = [];
         foreach ($db->fetchAllAssociative("SHOW COLUMNS FROM `$table`") as $row) {
             $columns[$row['Field']] = $row['Type'];
