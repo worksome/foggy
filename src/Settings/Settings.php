@@ -24,10 +24,21 @@ class Settings
         return new Database($this->settings->database);
     }
 
-    public function findTable(string $table): ?Table
+    public function findTable(string $table): Table|null
     {
         try {
-            return $this->getDatabase()->getTable($table);
+            return $this->getDatabase()
+                        ->getTable($table);
+        } catch (InvalidArgumentException $exception) {
+            return null;
+        }
+    }
+
+    public function findView(string $view): View|null
+    {
+        try {
+            return $this->getDatabase()
+                        ->getView(($view));
         } catch (InvalidArgumentException $exception) {
             return null;
         }

@@ -26,15 +26,31 @@ class Database
      */
     public function getTable(string $table): Table
     {
-        $configTables = $this->settings;
+        try {
+            return new Table($this->findInSettings($table));
+        } catch (InvalidArgumentException) {
+            throw new InvalidArgumentException("The table [$table] does not exist in config.");
+        }
+    }
 
-        foreach ($configTables as $name => $config) {
-            $pattern = str_replace(['*', '?'], ['(.*)', '.'], $name);
-            if (preg_match("/^$pattern$/i", $table)) {
-                return new Table($config);
+    public function getView(string $view): View
+    {
+        try {
+            return new View($this->findInSettings($view));
+        } catch (InvalidArgumentException) {
+            throw new InvalidArgumentException("The view [$view] does not exist in config.");
+        }
+    }
+
+    private function findInSettings(string $search): stdClass
+    {
+        foreach ($this->settings as $name => $config) {
+            $pattern = str_replace([ '*', '?' ], [ '(.*)', '.' ], $name);
+            if (preg_match("/^$pattern$/i", $search)) {
+                return $config;
             }
         }
 
-        throw new InvalidArgumentException("The table [$table] does not exist in config.");
+        throw new InvalidArgumentException("[$search] does not exist in config.");
     }
 }

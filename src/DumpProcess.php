@@ -5,6 +5,7 @@ namespace Worksome\Foggy;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception as DbalException;
+use Doctrine\DBAL\Schema\View;
 use Safe\Exceptions\JsonException;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,8 +32,12 @@ class DumpProcess
      *
      * @throws JsonException|DbalException
      */
-    public function __construct($dsn, string $config, OutputInterface $dumpOutput, ConsoleOutput $consoleOutput = null)
-    {
+    public function __construct(
+        $dsn,
+        string $config,
+        OutputInterface $dumpOutput,
+        ConsoleOutput $consoleOutput = null,
+    ) {
         $this->dumpOutput = $dumpOutput;
         $this->config = new Settings(json_decode(file_get_contents($config)));
 
@@ -62,6 +67,14 @@ class DumpProcess
         );
         $dumper->dumpConfiguration();
 
+        $this->dumpTables($dumper);
+        $this->dumpViews($dumper);
+
+        $dumper->dumpResetConfiguration();
+    }
+
+    private function dumpTables(Dumper $dumper): void
+    {
         $db = $this->db;
 
         $platform = $db->getDatabasePlatform();
@@ -77,14 +90,33 @@ class DumpProcess
             }
 
             // Dump the schema of the table.
-            $dumper->dumpSchema($tableName, $db);
+            $dumper->dumpTableSchema($tableName, $db);
 
             // Dump data for the table if allowed
             if ($table->withData()) {
                 $dumper->dumpData($tableName, $table, $db);
             }
         }
+    }
 
-        $dumper->dumpResetConfiguration();
+    private function dumpViews(Dumper $dumper): void
+    {
+        $db = $this->db;
+        $schemaManager = $db->createSchemaManager();
+
+        $views = $schemaManager->listViews();
+
+        foreach ($views as $viewName => $view) {
+            /**
+             * @var View $view
+             */
+            $viewSettings = $this->config->findView($viewName);
+
+            if ($viewSettings === null) {
+                continue;
+            }
+
+            $dumper->dumpViewSchema($view);
+        }
     }
 }
