@@ -15,25 +15,25 @@ jobs:
         php: ['8.2']
       fail-fast: false
     steps:
+
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           coverage: none
-          tools: composer:v2
+          tools: composer
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --ignore-platform-reqs --optimize-autoloader
+        run: composer install --no-progress --prefer-dist --optimize-autoloader --ansi
 
       - name: Run tests
         run: composer test
 
-      - name: Setup problem matchers for PHP
-        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-
-      - name: Setup problem matchers for PHPUnit
-        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
