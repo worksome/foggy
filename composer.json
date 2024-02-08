@@ -15,17 +15,17 @@
         "php": "^8.2",
         "ext-json": "*",
         "ext-pdo": "*",
-        "doctrine/dbal": "^3.1",
-        "symfony/console": "^6.2",
-        "symfony/var-dumper": "^6.2",
-        "thecodingmachine/safe": "^2.0",
+        "doctrine/dbal": "^3.6",
+        "symfony/console": "^6.4 || ^7.0",
+        "symfony/var-dumper": "^6.4 || ^7.0",
+        "thecodingmachine/safe": "^2.5",
         "fakerphp/faker": "^1.10"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "pestphp/pest": "^2.0",
+        "pestphp/pest": "^2.33",
         "mockery/mockery": "^1.5.1",
-        "worksome/coding-style": "^2.5"
+        "worksome/coding-style": "^2.8"
     },
     "autoload": {
         "psr-4": {

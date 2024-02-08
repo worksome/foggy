@@ -1,8 +1,10 @@
 # Foggy - Database scrubbing
+
 Foggy is a package which creates a database dump of your database, but with scrubbed data.
 Perfect for taking a production database and use locally.
 
-## Installation
+## Install
+
 For installation via composer
 ````bash
 $ composer require worksome/foggy
@@ -14,14 +16,16 @@ $ composer require worksome/foggy-laravel
 ```
 
 ## Usage
+
 For usage with Laravel, read more in [Laravel Foggy docs](https://github.com/worksome/foggy-laravel#usage).
 
-
 ## Configuration
+
 The configuration lies in a JSON file, which has to adhere to the `schema.json` file.
 You can validate your configuration file on [jsonschemavalidator.net](https://www.jsonschemavalidator.net/) or directly in phpstorm.
 
-For the most basic configuration, where all tables are dumped, but no data is scrubbed, we simply do
+For the most basic configuration, where all tables are dumped, but no data is scrubbed, we simply do:
+
 ```json
 {
   "database": {
@@ -31,10 +35,12 @@ For the most basic configuration, where all tables are dumped, but no data is sc
   }
 }
 ```
+
 Here we have specified that all tables and views (`*`) should be dumped with data by default.
 A more secure default would be to set `withData` to `false`, so only schema definitions are exported, if nothing specific is specified.
 
 ### Defining rules for a table
+
 All table definitions live inside `database` key in the json object.
 Each table can have an array of rules. A rule consist of the following
 - `column` - Which column to apply the rule to.
@@ -46,6 +52,7 @@ Each table can have an array of rules. A rule consist of the following
 
 In the following snippet we have added some rules for the `users` table.
 It shows a quick example of some rules and parameters.
+
 ```json
 {
   "database": {
@@ -78,10 +85,12 @@ It shows a quick example of some rules and parameters.
 ```
 
 ### Rules
+
 Each table can have an array of rules. Rules are applied to a specific column and can modify
 the values in that column per row.
 
 #### Faker
+
 The faker rule is to replace the value with a new fake value.
 It uses the [faker library](https://github.com/fzaninotto/Faker) underneath, so all formatters
 available in faker can be used here.
@@ -111,6 +120,7 @@ In the following example we specify that we only want to generate `female` names
 ```
 
 #### Replacer
+
 The replacer rule replaces a column with the given value.
 It's a simple rule for when you just want all entries to have the same value. A great use-case is for
 setting all passwords to the same value, so when using the scrubbed database, you can log in on all user's
@@ -126,6 +136,7 @@ In the following example we replace all passwords with `secret`, but a hashed ed
 ```
 
 #### PHP
+
 The PHP rule is a basic, but really powerful rule. It allows you to define a PHP string which will be applied
 to the column.
 This string has a few variables which can be accessed.
@@ -146,10 +157,12 @@ not needed to write `return`, as the statement is wrapped in a `return` automati
 ### Conditions
 
 #### Times
+
 It is possible to limit a column to only be applied `x` amount of times, by supplying an argument named
 `times`. This will limit, so the rule is only applied until the `times` are hit.
 
 ### SQL Views
+
 All views definitions live inside `database` key in the json object.
 In opposition to tables, views do not have any particular rules applicable to them.
 

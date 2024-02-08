@@ -40,7 +40,7 @@ class Dumper
     }
 
     /**
-     * Creates a instance of a progress bar in the specified console output interface.
+     * Creates an instance of a progress bar in the specified console output interface.
      */
     public function createProgressBar(int $max = 1): ProgressBar
     {
@@ -254,7 +254,7 @@ class Dumper
     }
 
     /**
-     * @param array(string=>mixed) $cols
+     * @param array<string, mixed> $cols
      */
     protected function insertValuesStatement($table, $cols): string
     {
