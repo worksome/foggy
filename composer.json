@@ -15,7 +15,7 @@
         "php": "^8.2",
         "ext-json": "*",
         "ext-pdo": "*",
-        "doctrine/dbal": "^3.6",
+        "doctrine/dbal": "^4.0",
         "symfony/console": "^6.4 || ^7.0",
         "symfony/var-dumper": "^6.4 || ^7.0",
         "thecodingmachine/safe": "^2.5",
