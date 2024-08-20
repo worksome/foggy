@@ -1,19 +1,23 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"type": "object",
-	"title": "The Root Schema",
+	"title": "Foggy Schema",
+	"description": "A Foggy (https://github.com/worksome/foggy) configuration.",
 	"required": [
 		"database"
 	],
 	"definitions": {
 		"table": {
 			"type": "object",
+			"description": "A representation of how a table should be dumped.",
 			"properties": {
 				"withData" : {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "Whether the tables data should be included in the dump."
 				},
 				"rules" : {
 					"type": "array",
+					"description": "A configuration rule for a column.",
 					"items": {
 						"$ref": "#/definitions/rule"
 					}
@@ -21,38 +25,52 @@
 			},
 			"required": [
 				"withData"
-			]
+			],
+			"additionalProperties": false
 		},
 		"rule": {
 			"type": "object",
+			"description": "A representation of how a column should be dumped.",
 			"properties": {
 				"column": {
-					"type": "string"
+					"type": "string",
+					"description": "The name of the column."
 				},
 				"type": {
-					"enum": [
-						"faker",
-						"php",
-						"replace"
-					]
+					"$ref": "#/definitions/ruleType",
+					"description": "The type of rule that should be used."
 				},
 				"value": {
-					"type": "string"
+					"type": "string",
+					"description": "The value that should be used for the column."
 				},
 				"condition": {
-					"type": "string"
+					"type": "string",
+					"description": "The conditional rule that has to pass before the rule is applied."
 				},
 				"times": {
-					"type": "integer"
+					"type": "integer",
+					"description": "The number of times the rule is allowed to be applied."
 				},
 				"params": {
-					"type": "string"
+					"type": "string",
+					"description": "A list of static pipe-separated (|) parameters to pass to the rule."
 				}
 			},
 			"required": [
 				"column",
 				"type",
 				"value"
+			],
+			"additionalProperties": false
+		},
+		"ruleType": {
+			"type": "string",
+			"description": "The type of rule to use.",
+			"enum": [
+				"faker",
+				"php",
+				"replace"
 			]
 		}
 	},
@@ -60,12 +78,14 @@
 		"database": {
 			"$id": "#/properties/database",
 			"type": "object",
-			"title": "Holds all information of how the database should be dumped",
+			"title": "Database configuration",
+			"description": "A representation of how the database should be dumped.",
 			"patternProperties": {
 				"^.*$": {
 					"$ref": "#/definitions/table"
 				}
 			}
 		}
-	}
+	},
+	"additionalProperties": false
 }

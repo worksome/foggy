@@ -5,13 +5,13 @@ Perfect for taking a production database and use locally.
 
 ## Install
 
-For installation via composer
-````bash
+For installation via Composer
+````shell
 $ composer require worksome/foggy
 ````
 
 For installation in a Laravel application
-```bash
+```shell
 $ composer require worksome/foggy-laravel
 ```
 
@@ -108,7 +108,7 @@ In the following example we are calling the `email` faker.
 
 Sometimes you might want to use faker formatters which takes arguments. Arguments can be
 supplied by using the `params` key in the json object.
-In the following example we specify that we only want to generate `female` names.
+In the following example we specify that we only want to generate `male` names.
 
 ```json
 {
