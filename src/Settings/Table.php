@@ -29,7 +29,7 @@ class Table
         return $this->settings->withData ?? true;
     }
 
-    public function getWhere(): ?string
+    public function getWhere(): string|null
     {
         if (isset($this->settings->where)) {
             return " WHERE {$this->settings->where}";

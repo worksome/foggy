@@ -28,6 +28,6 @@ it('can pass arguments', function () {
         $fakeRule,
         $fakeConnection,
         [],
-        ""
+        ''
     );
 });

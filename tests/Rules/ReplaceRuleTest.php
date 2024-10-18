@@ -24,6 +24,6 @@ it('can replace value', function () {
         $fakeRule,
         $fakeConnection,
         [],
-        ""
+        ''
     );
 });
