@@ -8,9 +8,9 @@ use Worksome\Foggy\Rules\PhpRule;
 use Worksome\Foggy\Settings\Rule;
 
 it('can evaluate php string', function () {
-    $value = "column value";
+    $value = 'column value';
     $phpString = '"appended " . $value';
-    $generatedValue = "appended column value";
+    $generatedValue = 'appended column value';
 
     $fakerRule = new PhpRule();
 
@@ -31,7 +31,7 @@ it('can evaluate php string', function () {
 });
 
 it('can cast null to SQL NULL', function () {
-    $value = "column value";
+    $value = 'column value';
     $phpString = 'null';
 
     $fakerRule = new PhpRule();

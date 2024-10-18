@@ -34,7 +34,7 @@ class Rule
         return $this->getCondition() !== null || $this->getTimes() !== null;
     }
 
-    public function getCondition(): ?string
+    public function getCondition(): string|null
     {
         return $this->settings->condition ?? null;
     }
@@ -44,12 +44,12 @@ class Rule
         return $this->settings->column;
     }
 
-    public function getValue(): ?string
+    public function getValue(): string|null
     {
         return $this->settings->value ?? null;
     }
 
-    public function getTimes(): ?int
+    public function getTimes(): int|null
     {
         return $this->settings->times ?? null;
     }

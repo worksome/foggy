@@ -18,7 +18,7 @@ class PhpRule implements Rule
         $result = eval("return {$rule->getValue()};");
 
         if ($result === null) {
-            return "NULL";
+            return 'NULL';
         }
 
         return $db->quote($result);

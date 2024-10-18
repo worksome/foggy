@@ -9,7 +9,7 @@ use Worksome\Foggy\Settings\Rule as SettingsRule;
 
 class FakerRule implements Rule
 {
-    protected static ?FakerGenerator $faker = null;
+    protected static FakerGenerator|null $faker = null;
 
     public static function faker(): FakerGenerator
     {
