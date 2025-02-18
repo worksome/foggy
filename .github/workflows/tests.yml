@@ -34,4 +34,4 @@ jobs:
         run: composer install --no-progress --prefer-dist --optimize-autoloader --ansi
 
       - name: Run tests
-        run: composer test
+        run: composer test:unit
