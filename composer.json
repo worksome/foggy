@@ -18,7 +18,7 @@
         "doctrine/dbal": "^3.6",
         "symfony/console": "^6.4 || ^7.0",
         "symfony/var-dumper": "^6.4 || ^7.0",
-        "thecodingmachine/safe": "^2.5",
+        "thecodingmachine/safe": "^2.5 || ^3.0",
         "fakerphp/faker": "^1.10"
     },
     "require-dev": {
@@ -39,11 +39,14 @@
     },
     "scripts": {
         "lint": "vendor/bin/ecs --fix",
-        "test:pest" : "vendor/bin/pest",
+        "test:unit": "vendor/bin/pest -p",
+        "test:coverage": "vendor/bin/pest -p --coverage",
+        "test:types": "vendor/bin/phpstan analyse",
         "test:style": "vendor/bin/ecs",
         "test": [
             "@test:style",
-            "@test:pest"
+            "@test:types",
+            "@test:unit"
         ]
     },
     "config": {

@@ -10,6 +10,7 @@ use Safe\Exceptions\JsonException;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Worksome\Foggy\Settings\Settings;
+use function Safe\file_get_contents;
 use function Safe\json_decode;
 
 /**

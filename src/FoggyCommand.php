@@ -42,6 +42,6 @@ class FoggyCommand extends Command
         $process = new DumpProcess($dsn, $configFile, $output);
         $process->run();
 
-        return 0;
+        return self::SUCCESS;
     }
 }
