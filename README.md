@@ -7,12 +7,12 @@ Perfect for taking a production database and use locally.
 
 For installation via Composer
 ````shell
-$ composer require worksome/foggy
+composer require worksome/foggy
 ````
 
 For installation in a Laravel application
 ```shell
-$ composer require worksome/foggy-laravel
+composer require worksome/foggy-laravel
 ```
 
 ## Usage

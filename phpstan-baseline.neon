@@ -1,0 +1,358 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '''
+				#^Call to deprecated method getListTablesSQL\(\) of class Doctrine\\DBAL\\Platforms\\AbstractPlatform\:
+				The SQL used for schema introspection is an implementation detail and should not be relied upon\.$#
+			'''
+			identifier: method.deprecated
+			count: 1
+			path: src/DumpProcess.php
+
+		-
+			message: '#^PHP files should declare strict types\.$#'
+			identifier: worksome.declareStrictTypes
+			count: 1
+			path: src/DumpProcess.php
+
+		-
+			message: '#^Parameter \#1 \$json of function Safe\\json_decode expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DumpProcess.php
+
+		-
+			message: '#^Parameter \#1 \$params of static method Doctrine\\DBAL\\DriverManager\:\:getConnection\(\) expects array\{application_name\?\: string, charset\?\: string, dbname\?\: string, defaultTableOptions\?\: array\<string, mixed\>, default_dbname\?\: string, driver\?\: ''ibm_db2''\|''mysqli''\|''oci8''\|''pdo_mysql''\|''pdo_oci''\|''pdo_pgsql''\|''pdo_sqlite''\|''pdo_sqlsrv''\|''pgsql''\|''sqlite3''\|''sqlsrv'', driverClass\?\: class\-string\<Doctrine\\DBAL\\Driver\>, driverOptions\?\: array\<mixed\>, \.\.\.\}, array\{url\: string\|null, charset\: ''utf8''\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DumpProcess.php
+
+		-
+			message: '#^Parameter \#1 \$settings of class Worksome\\Foggy\\Settings\\Settings constructor expects stdClass, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DumpProcess.php
+
+		-
+			message: '#^Parameter \#1 \$table of method Worksome\\Foggy\\Dumper\:\:dumpData\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DumpProcess.php
+
+		-
+			message: '#^Parameter \#1 \$table of method Worksome\\Foggy\\Dumper\:\:dumpTableSchema\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DumpProcess.php
+
+		-
+			message: '#^Parameter \#1 \$table of method Worksome\\Foggy\\Settings\\Settings\:\:findTable\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DumpProcess.php
+
+		-
+			message: '#^Binary operation "\." between mixed and '';'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Dumper.php
+
+		-
+			message: '#^Binary operation "/" between mixed and 100 results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Dumper.php
+
+		-
+			message: '''
+				#^Call to deprecated method getWrappedConnection\(\) of class Doctrine\\DBAL\\Connection\:
+				Use \{@link getNativeConnection\(\)\} to access the native connection\.$#
+			'''
+			identifier: method.deprecated
+			count: 1
+			path: src/Dumper.php
+
+		-
+			message: '''
+				#^Call to deprecated method getWrappedConnection\(\) of class Doctrine\\DBAL\\Driver\\PDO\\Connection\:
+				Call \{@see getNativeConnection\(\)\} instead\.$#
+			'''
+			identifier: method.deprecated
+			count: 1
+			path: src/Dumper.php
+
+		-
+			message: '#^Cannot access offset 1 on list\<mixed\>\|false\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Dumper.php
+
+		-
+			message: '#^Method Worksome\\Foggy\\Dumper\:\:insertValuesStatement\(\) has parameter \$table with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Dumper.php
+
+		-
+			message: '#^PHP files should declare strict types\.$#'
+			identifier: worksome.declareStrictTypes
+			count: 1
+			path: src/Dumper.php
+
+		-
+			message: '#^Parameter \#1 \$max of method Worksome\\Foggy\\Dumper\:\:createProgressBar\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Dumper.php
+
+		-
+			message: '#^Parameter \#1 \$string of function strlen expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Dumper.php
+
+		-
+			message: '#^Parameter \#2 \$cols of method Worksome\\Foggy\\Dumper\:\:insertValuesStatement\(\) expects array\<string, mixed\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Dumper.php
+
+		-
+			message: '#^Part \$table \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: src/Dumper.php
+
+		-
+			message: '#^PHP files should declare strict types\.$#'
+			identifier: worksome.declareStrictTypes
+			count: 1
+			path: src/FoggyApplication.php
+
+		-
+			message: '#^PHP files should declare strict types\.$#'
+			identifier: worksome.declareStrictTypes
+			count: 1
+			path: src/FoggyCommand.php
+
+		-
+			message: '#^Parameter \#1 \$dsn of class Worksome\\Foggy\\DumpProcess constructor expects Doctrine\\DBAL\\Connection\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/FoggyCommand.php
+
+		-
+			message: '#^Parameter \#2 \$config of class Worksome\\Foggy\\DumpProcess constructor expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/FoggyCommand.php
+
+		-
+			message: '#^PHP files should declare strict types\.$#'
+			identifier: worksome.declareStrictTypes
+			count: 1
+			path: src/Rules/ConditionValidator.php
+
+		-
+			message: '#^Method Worksome\\Foggy\\Rules\\FakerRule\:\:handle\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Rules/FakerRule.php
+
+		-
+			message: '#^PHP files should declare strict types\.$#'
+			identifier: worksome.declareStrictTypes
+			count: 1
+			path: src/Rules/FakerRule.php
+
+		-
+			message: '#^Parameter \#2 \$string of function explode expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Rules/FakerRule.php
+
+		-
+			message: '#^Method Worksome\\Foggy\\Rules\\PhpRule\:\:handle\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Rules/PhpRule.php
+
+		-
+			message: '#^PHP files should declare strict types\.$#'
+			identifier: worksome.declareStrictTypes
+			count: 1
+			path: src/Rules/PhpRule.php
+
+		-
+			message: '#^Method Worksome\\Foggy\\Rules\\ReplaceRule\:\:handle\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Rules/ReplaceRule.php
+
+		-
+			message: '#^PHP files should declare strict types\.$#'
+			identifier: worksome.declareStrictTypes
+			count: 1
+			path: src/Rules/ReplaceRule.php
+
+		-
+			message: '#^PHP files should declare strict types\.$#'
+			identifier: worksome.declareStrictTypes
+			count: 1
+			path: src/Rules/Rule.php
+
+		-
+			message: '#^Argument of an invalid type stdClass supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/Settings/Database.php
+
+		-
+			message: '#^Method Worksome\\Foggy\\Settings\\Database\:\:findInSettings\(\) should return stdClass but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Settings/Database.php
+
+		-
+			message: '#^PHP files should declare strict types\.$#'
+			identifier: worksome.declareStrictTypes
+			count: 1
+			path: src/Settings/Database.php
+
+		-
+			message: '#^Parameter \#3 \$subject of function str_replace expects array\<string\>\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Database.php
+
+		-
+			message: '#^Method Worksome\\Foggy\\Settings\\Rule\:\:getColumn\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Settings/Rule.php
+
+		-
+			message: '#^Method Worksome\\Foggy\\Settings\\Rule\:\:getCondition\(\) should return string\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Settings/Rule.php
+
+		-
+			message: '#^Method Worksome\\Foggy\\Settings\\Rule\:\:getTimes\(\) should return int\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Settings/Rule.php
+
+		-
+			message: '#^Method Worksome\\Foggy\\Settings\\Rule\:\:getValue\(\) should return string\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Settings/Rule.php
+
+		-
+			message: '#^Method Worksome\\Foggy\\Settings\\Rule\:\:processRow\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Settings/Rule.php
+
+		-
+			message: '#^PHP files should declare strict types\.$#'
+			identifier: worksome.declareStrictTypes
+			count: 1
+			path: src/Settings/Rule.php
+
+		-
+			message: '#^PHPDoc tag @return with type string\|Worksome\\Foggy\\Rules\\Rule is not subtype of native type string\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: src/Settings/Rule.php
+
+		-
+			message: '#^Parameter \#2 \$string of function explode expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Rule.php
+
+		-
+			message: '#^Part \$this\-\>settings\-\>type \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: src/Settings/Rule.php
+
+		-
+			message: '#^PHP files should declare strict types\.$#'
+			identifier: worksome.declareStrictTypes
+			count: 1
+			path: src/Settings/Settings.php
+
+		-
+			message: '#^Parameter \#1 \$settings of class Worksome\\Foggy\\Settings\\Database constructor expects stdClass, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Settings.php
+
+		-
+			message: '#^Method Worksome\\Foggy\\Settings\\Table\:\:getRulesWithPassedCondition\(\) should return array\<Worksome\\Foggy\\Settings\\Rule\> but returns array\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Settings/Table.php
+
+		-
+			message: '#^Method Worksome\\Foggy\\Settings\\Table\:\:getStringForInsertStatement\(\) has parameter \$value with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Settings/Table.php
+
+		-
+			message: '#^Method Worksome\\Foggy\\Settings\\Table\:\:getStringForInsertStatement\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Settings/Table.php
+
+		-
+			message: '#^Method Worksome\\Foggy\\Settings\\Table\:\:withData\(\) should return bool but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Settings/Table.php
+
+		-
+			message: '#^PHP files should declare strict types\.$#'
+			identifier: worksome.declareStrictTypes
+			count: 1
+			path: src/Settings/Table.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(stdClass\)\: Worksome\\Foggy\\Settings\\Rule given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Table.php
+
+		-
+			message: '#^Parameter \#1 \$value of method Worksome\\Foggy\\Settings\\Rule\:\:processRow\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Table.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Table.php
+
+		-
+			message: '#^Parameter \#2 \$callback of function array_filter expects \(callable\(mixed\)\: bool\)\|null, Closure\(Worksome\\Foggy\\Settings\\Rule\)\: bool given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Settings/Table.php
+
+		-
+			message: '#^Part \$this\-\>settings\-\>where \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: src/Settings/Table.php
+
+		-
+			message: '#^PHP files should declare strict types\.$#'
+			identifier: worksome.declareStrictTypes
+			count: 1
+			path: src/Settings/View.php
