@@ -12,7 +12,7 @@
         "bin/foggy"
     ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "ext-json": "*",
         "ext-pdo": "*",
         "doctrine/dbal": "^3.6",
@@ -23,9 +23,9 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "pestphp/pest": "^3.4",
-        "mockery/mockery": "^1.5.1",
-        "worksome/coding-style": "^3.1.1"
+        "pestphp/pest": "^3.7",
+        "mockery/mockery": "^1.6",
+        "worksome/coding-style": "^3.2"
     },
     "autoload": {
         "psr-4": {
