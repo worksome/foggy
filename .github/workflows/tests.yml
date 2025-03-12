@@ -9,11 +9,11 @@ on:
 jobs:
   php-tests:
     name: Testing on PHP ${{ matrix.php }}
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        php: [8.2, 8.3]
-      fail-fast: false
+        os: [ubuntu-latest]
+        php: [8.4, 8.3]
     steps:
 
       - name: Checkout code
