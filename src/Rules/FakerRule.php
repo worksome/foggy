@@ -31,6 +31,10 @@ class FakerRule implements Rule
             $result = $result->{$ruleName}(...$params[$key]);
         }
 
+        if ($result === null) {
+            return 'NULL';
+        }
+
         return $db->quote($result);
     }
 

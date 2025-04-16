@@ -5,7 +5,7 @@ namespace Worksome\Foggy;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception as DbalException;
-use Doctrine\DBAL\Schema\View;
+use Doctrine\DBAL\Tools\DsnParser;
 use Safe\Exceptions\JsonException;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -46,9 +46,14 @@ class DumpProcess
             $this->db = $dsn;
         } else {
             $dsn = preg_replace('_^mysqli:_', 'mysql:', $dsn);
+            $params = new DsnParser([
+                'mysql'  => 'pdo_mysql',
+                'mysql2' => 'pdo_mysql',
+            ])->parse($dsn);
+
             $this->db = DriverManager::getConnection([
-                'url'         => $dsn,
-                'charset'     => 'utf8',
+                ...$params,
+                'charset' => 'utf8',
             ]);
         }
 
@@ -78,11 +83,9 @@ class DumpProcess
     {
         $db = $this->db;
 
-        $platform = $db->getDatabasePlatform();
+        $tables = $db->fetchFirstColumn("SHOW FULL TABLES WHERE Table_type = 'BASE TABLE'");
 
-        $tables = $db->executeQuery($platform->getListTablesSQL());
-
-        while ($tableName = $tables->fetchOne()) {
+        foreach ($tables as $tableName) {
             $table = $this->config->findTable($tableName);
 
             // Skip table if not set in config.
@@ -102,22 +105,18 @@ class DumpProcess
 
     private function dumpViews(Dumper $dumper): void
     {
-        $db = $this->db;
-        $schemaManager = $db->createSchemaManager();
+        $views = $this->db->fetchAllKeyValue(
+            'SELECT TABLE_NAME, VIEW_DEFINITION FROM information_schema.VIEWS WHERE TABLE_SCHEMA = DATABASE()'
+        );
 
-        $views = $schemaManager->listViews();
-
-        foreach ($views as $viewName => $view) {
-            /**
-             * @var View $view
-             */
+        foreach ($views as $viewName => $viewSql) {
             $viewSettings = $this->config->findView($viewName);
 
             if ($viewSettings === null) {
                 continue;
             }
 
-            $dumper->dumpViewSchema($view);
+            $dumper->dumpViewSchema($viewName, $viewSql);
         }
     }
 }

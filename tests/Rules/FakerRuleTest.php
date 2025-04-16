@@ -10,7 +10,7 @@ use Worksome\Foggy\Settings\Rule;
 
 it('can pass arguments', function () {
     $faker = Mockery::mock(FakerGenerator::class);
-    $faker->shouldReceive('firstName')->with('male')->once();
+    $faker->shouldReceive('firstName')->with('male')->andReturn('John')->once();
 
     $fakerRule = new FakerRule();
     $fakerRule::setFaker($faker);
@@ -22,7 +22,7 @@ it('can pass arguments', function () {
     ])->once();
 
     $fakeConnection = Mockery::mock(Connection::class);
-    $fakeConnection->shouldReceive('quote')->andReturn('quote result')->once();
+    $fakeConnection->shouldReceive('quote')->with('John')->andReturn('quote result')->once();
 
     $fakerRule::handle(
         $fakeRule,
@@ -30,4 +30,21 @@ it('can pass arguments', function () {
         [],
         ''
     );
+});
+
+it('can cast null to SQL NULL', function () {
+    $faker = Mockery::mock(FakerGenerator::class);
+    $faker->shouldReceive('firstName')->andReturnNull()->once();
+
+    $fakerRule = new FakerRule();
+    $fakerRule::setFaker($faker);
+
+    $fakeRule = Mockery::mock(Rule::class);
+    $fakeRule->shouldReceive('getValue')->andReturn('firstName')->once();
+    $fakeRule->shouldReceive('getParameters')->andReturn([[]])->once();
+
+    $fakeConnection = Mockery::mock(Connection::class);
+    $fakeConnection->shouldNotReceive('quote');
+
+    expect($fakerRule::handle($fakeRule, $fakeConnection, [], ''))->toBe('NULL');
 });
