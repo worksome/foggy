@@ -263,11 +263,12 @@ class Dumper
 
     protected function rowLengthEstimate(array $row): int
     {
-        $l = 0;
+        $length = 0;
+
         foreach ($row as $value) {
-            $l += strlen($value);
+            $length += ($value !== null ? strlen($value) : 0);
         }
 
-        return $l;
+        return $length;
     }
 }
