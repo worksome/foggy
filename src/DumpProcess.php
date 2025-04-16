@@ -37,7 +37,7 @@ class DumpProcess
         $dsn,
         string $config,
         OutputInterface $dumpOutput,
-        ConsoleOutput $consoleOutput = null,
+        ConsoleOutput|null $consoleOutput = null,
     ) {
         $this->dumpOutput = $dumpOutput;
         $this->config = new Settings(json_decode(file_get_contents($config)));

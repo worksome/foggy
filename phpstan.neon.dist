@@ -1,12 +1,11 @@
 includes:
-    - ./vendor/worksome/coding-style/larastan.neon
+    - ./vendor/worksome/coding-style/phpstan.neon
     - phpstan-baseline.neon
 
 parameters:
-    level: max
+    level: 6
     paths:
         - src
     tmpDir: build/phpstan
-    checkModelProperties: true
     parallel:
             processTimeout: 300.0

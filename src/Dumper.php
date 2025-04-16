@@ -186,8 +186,8 @@ class Dumper
         $progress->start();
 
         /** @var PdoConnection $wrappedConnection */
-        $wrappedConnection = $db->getWrappedConnection();
-        $pdo = $wrappedConnection->getWrappedConnection();
+        $wrappedConnection = $db->getNativeConnection();
+        $pdo = $wrappedConnection->getNativeConnection();
         $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
 
         foreach ($db->executeQuery($selectQuery)->iterateAssociative() as $row) {
@@ -263,11 +263,12 @@ class Dumper
 
     protected function rowLengthEstimate(array $row): int
     {
-        $l = 0;
+        $length = 0;
+
         foreach ($row as $value) {
-            $l += strlen($value);
+            $length += ($value !== null ? strlen($value) : 0);
         }
 
-        return $l;
+        return $length;
     }
 }
