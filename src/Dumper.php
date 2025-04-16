@@ -186,8 +186,8 @@ class Dumper
         $progress->start();
 
         /** @var PdoConnection $wrappedConnection */
-        $wrappedConnection = $db->getWrappedConnection();
-        $pdo = $wrappedConnection->getWrappedConnection();
+        $wrappedConnection = $db->getNativeConnection();
+        $pdo = $wrappedConnection->getNativeConnection();
         $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
 
         foreach ($db->executeQuery($selectQuery)->iterateAssociative() as $row) {
