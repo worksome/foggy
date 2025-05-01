@@ -3,7 +3,6 @@
 namespace Worksome\Foggy;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Driver\PDO\Connection as PdoConnection;
 use Doctrine\DBAL\Exception as DbalException;
 use Doctrine\DBAL\Schema\View;
 use PDO;
@@ -185,9 +184,8 @@ class Dumper
         $progress->setRedrawFrequency(max($numRows / 100, 1));
         $progress->start();
 
-        /** @var PdoConnection $wrappedConnection */
-        $wrappedConnection = $db->getNativeConnection();
-        $pdo = $wrappedConnection->getNativeConnection();
+        /** @var PDO $pdo */
+        $pdo = $db->getNativeConnection();
         $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
 
         foreach ($db->executeQuery($selectQuery)->iterateAssociative() as $row) {
