@@ -21,8 +21,8 @@ For usage with Laravel, read more in [Laravel Foggy docs](https://github.com/wor
 
 ## Configuration
 
-The configuration lies in a JSON file, which has to adhere to the `schema.json` file.
-You can validate your configuration file on [jsonschemavalidator.net](https://www.jsonschemavalidator.net/) or directly in phpstorm.
+The configuration lies in a JSON file, which has to adhere to the [`schema.json`](schema.json) file.
+You can validate your configuration file on [jsonschemavalidator.net](https://www.jsonschemavalidator.net) or directly in an IDE such as PhpStorm.
 
 For the most basic configuration, where all tables are dumped, but no data is scrubbed, we simply do:
 
@@ -41,13 +41,13 @@ A more secure default would be to set `withData` to `false`, so only schema defi
 
 ### Defining rules for a table
 
-All table definitions live inside `database` key in the json object.
-Each table can have an array of rules. A rule consist of the following
+All table definitions live inside `database` key in the JSON object.
+Each table can have an array of rules. A rule consists of the following:
 - `column` - Which column to apply the rule to.
 - `type` - Which rule type to use.
 - `value` - The value supplied to the rule type.
-- `times` (optional) - The amount of times this rule are allowed to be applied.
-- `params` (optional) - Static parameters supplied to the rule.
+- `times` (optional) - The number of times this rule is allowed to be applied.
+- `params` (optional) - A list of static parameters supplied to the rule.
 - `condition` (optional) - Add a condition which has to pass before the rule is applied.
 
 In the following snippet we have added some rules for the `users` table.
@@ -60,20 +60,20 @@ It shows a quick example of some rules and parameters.
       "withData": true,
       "rules": [
         {
-          "__comment": "Generate a fake name for all users, except if they are our own employees",
+          "$comment": "Generate a fake name for all users, except if they are our own employees",
           "column": "name",
           "type": "faker",
           "value": "name",
           "condition": "!str_contains($row['email'], '@worksome.com')"
         },
         {
-          "__comment": "Replace all avatars with a fake image based on their user id.",
+          "$comment": "Replace all avatars with a fake image based on their user id.",
           "column": "avatar",
           "type": "php",
           "value": "\"https://api.adorable.io/avatars/285/{$row['id']}.png\""
         },
         {
-          "__comment": "Replace all passwords with `secret`",
+          "$comment": "Replace all passwords with `secret`",
           "column": "password",
           "type": "replace",
           "value": "$2y$10$xmVOYC1DUte0oG86Zz8oeeKc3UXZNrdSKMoZGrCElup6VexStFh22"
@@ -91,7 +91,7 @@ the values in that column per row.
 
 #### Faker
 
-The faker rule is to replace the value with a new fake value.
+The `faker` rule is to replace the value with a new fake value.
 It uses the [faker library](https://github.com/fzaninotto/Faker) underneath, so all formatters
 available in faker can be used here.
 
@@ -106,8 +106,8 @@ In the following example we are calling the `email` faker.
 }
 ```
 
-Sometimes you might want to use faker formatters which takes arguments. Arguments can be
-supplied by using the `params` key in the json object.
+Sometimes you might want to use Faker formatters that take arguments. Arguments can be
+supplied by using the `params` key in the JSON object.
 In the following example we specify that we only want to generate `male` names.
 
 ```json
@@ -123,7 +123,7 @@ In the following example we specify that we only want to generate `male` names.
 
 The replacer rule replaces a column with the given value.
 It's a simple rule for when you just want all entries to have the same value. A great use-case is for
-setting all passwords to the same value, so when using the scrubbed database, you can log in on all user's
+setting all passwords to the same value, so when using the scrubbed database, you can log in on all users 
 with the same password.
 In the following example we replace all passwords with `secret`, but a hashed edition of it.
 
@@ -163,10 +163,10 @@ It is possible to limit a column to only be applied `x` amount of times, by supp
 
 ### SQL Views
 
-All views definitions live inside `database` key in the json object.
+All views definitions live inside `database` key in the JSON object.
 In opposition to tables, views do not have any particular rules applicable to them.
 
-Only requirement is for them to be listed in the json object to be included in the import.
+The only requirement is for them to be listed in the JSON object to be included in the import.
 The wildcard configuration `*` will include them all.
 
 ```json
