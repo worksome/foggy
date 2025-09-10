@@ -23,7 +23,7 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "pestphp/pest": "^3.7",
+        "pestphp/pest": "^4.1",
         "mockery/mockery": "^1.6",
         "worksome/coding-style": "^3.2"
     },
