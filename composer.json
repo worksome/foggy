@@ -12,7 +12,7 @@
         "bin/foggy"
     ],
     "require": {
-        "php": "^8.3",
+        "php": "^8.4",
         "ext-json": "*",
         "ext-pdo": "*",
         "doctrine/dbal": "^3.9",
