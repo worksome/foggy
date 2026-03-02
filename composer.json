@@ -16,16 +16,15 @@
         "ext-json": "*",
         "ext-pdo": "*",
         "doctrine/dbal": "^3.9",
-        "symfony/console": "^6.4 || ^7.0",
-        "symfony/var-dumper": "^6.4 || ^7.0",
-        "thecodingmachine/safe": "^2.5 || ^3.0",
-        "fakerphp/faker": "^1.10"
+        "symfony/console": "^7.0|^8.0",
+        "symfony/var-dumper": "^7.0|^8.0",
+        "thecodingmachine/safe": "^3.0",
+        "fakerphp/faker": "^1.24"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest",
         "pestphp/pest": "^4.1",
         "mockery/mockery": "^1.6",
-        "worksome/coding-style": "^3.3"
+        "worksome/coding-style": "^3.4"
     },
     "autoload": {
         "psr-4": {
