@@ -22,7 +22,7 @@
         "fakerphp/faker": "^1.24"
     },
     "require-dev": {
-        "pestphp/pest": "^4.1",
+        "pestphp/pest": "^5.1",
         "mockery/mockery": "^1.6",
         "worksome/coding-style": "^4.0"
     },
