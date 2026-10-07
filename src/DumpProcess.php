@@ -83,7 +83,8 @@ class DumpProcess
     {
         $db = $this->db;
 
-        $tables = $db->fetchFirstColumn("SHOW FULL TABLES WHERE Table_type = 'BASE TABLE'");
+        // `introspectTableNames()` replaces this in DBAL 4.5, but is unavailable in DBAL 3.x.
+        $tables = $db->createSchemaManager()->listTableNames();
 
         foreach ($tables as $tableName) {
             $table = $this->config->findTable($tableName);
@@ -105,18 +106,18 @@ class DumpProcess
 
     private function dumpViews(Dumper $dumper): void
     {
-        $views = $this->db->fetchAllKeyValue(
-            'SELECT TABLE_NAME, VIEW_DEFINITION FROM information_schema.VIEWS WHERE TABLE_SCHEMA = DATABASE()'
-        );
+        // `introspectViews()` replaces this in DBAL 4.5, but is unavailable in DBAL 3.x.
+        $views = $this->db->createSchemaManager()->listViews();
 
-        foreach ($views as $viewName => $viewSql) {
-            $viewSettings = $this->config->findView($viewName);
+        // DBAL 3.x keys views by name, whereas DBAL 4.x returns a list, so the name is read from the view.
+        foreach ($views as $view) {
+            $viewName = $view->getName();
 
-            if ($viewSettings === null) {
+            if ($this->config->findView($viewName) === null) {
                 continue;
             }
 
-            $dumper->dumpViewSchema($viewName, $viewSql);
+            $dumper->dumpViewSchema($viewName, $view->getSql());
         }
     }
 }

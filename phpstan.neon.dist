@@ -9,3 +9,10 @@ parameters:
     tmpDir: build/phpstan
     parallel:
             processTimeout: 300.0
+    ignoreErrors:
+        # The schema introspection replacements deprecated in DBAL 4.5 are unavailable in DBAL 3.x.
+        # Remove this once DBAL 3.x support is dropped.
+        -
+            identifier: method.deprecated
+            path: src/DumpProcess.php
+            reportUnmatched: false
