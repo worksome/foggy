@@ -4,8 +4,8 @@ namespace Worksome\Foggy;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception as DbalException;
-use Doctrine\DBAL\Schema\View;
 use PDO;
+use Pdo\Mysql;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -113,16 +113,16 @@ class Dumper
         $this->showDumpingSchemaProgress($table);
     }
 
-    public function dumpViewSchema(View $view): void
+    public function dumpViewSchema(string $view, string $sql): void
     {
-        $this->dumpNewLine("-- BEGIN STRUCTURE `{$view->getName()}`");
-        $this->dumpNewLine("DROP VIEW IF EXISTS `{$view->getName()}`;");
+        $this->dumpNewLine("-- BEGIN STRUCTURE `{$view}`");
+        $this->dumpNewLine("DROP VIEW IF EXISTS `{$view}`;");
         $this->dumpNewLine('/*!40101 SET @saved_cs_client     = @@character_set_client */;');
         $this->dumpNewLine('SET character_set_client = utf8mb4;');
 
-        $this->dumpNewLine("CREATE VIEW `{$view->getName()}` AS {$view->getSql()};");
+        $this->dumpNewLine("CREATE VIEW `{$view}` AS {$sql};");
         $this->dumpNewLine();
-        $this->showDumpingSchemaProgress($view->getName());
+        $this->showDumpingSchemaProgress($view);
     }
 
     private function showDumpingSchemaProgress(string $schema): void
@@ -186,7 +186,7 @@ class Dumper
 
         /** @var PDO $pdo */
         $pdo = $db->getNativeConnection();
-        $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
+        $pdo->setAttribute(Mysql::ATTR_USE_BUFFERED_QUERY, false);
 
         foreach ($db->executeQuery($selectQuery)->iterateAssociative() as $row) {
             $b = $this->rowLengthEstimate($row);
@@ -225,7 +225,7 @@ class Dumper
             $this->consoleOutput->getErrorOutput()->write("\n"); // write a newline after the progressbar.
         }
 
-        $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+        $pdo->setAttribute(Mysql::ATTR_USE_BUFFERED_QUERY, true);
 
         if ($bufferSize) {
             $this->dumpNewLine(';');

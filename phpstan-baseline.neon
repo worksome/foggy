@@ -1,15 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '''
-				#^Call to deprecated method getListTablesSQL\(\) of class Doctrine\\DBAL\\Platforms\\AbstractPlatform\:
-				The SQL used for schema introspection is an implementation detail and should not be relied upon\.$#
-			'''
-			identifier: method.deprecated
-			count: 1
-			path: src/DumpProcess.php
-
-		-
 			message: '#^PHP files should declare strict types\.$#'
 			identifier: worksome.declareStrictTypes
 			count: 1
