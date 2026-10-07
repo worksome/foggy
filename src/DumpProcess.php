@@ -83,10 +83,11 @@ class DumpProcess
     {
         $db = $this->db;
 
-        // `introspectTableNames()` replaces this in DBAL 4.5, but is unavailable in DBAL 3.x.
-        $tables = $db->createSchemaManager()->listTableNames();
+        $tables = $db->createSchemaManager()->introspectTableNames();
 
-        foreach ($tables as $tableName) {
+        foreach ($tables as $name) {
+            $tableName = $name->getUnqualifiedName()->getValue();
+
             $table = $this->config->findTable($tableName);
 
             // Skip table if not set in config.
@@ -106,12 +107,10 @@ class DumpProcess
 
     private function dumpViews(Dumper $dumper): void
     {
-        // `introspectViews()` replaces this in DBAL 4.5, but is unavailable in DBAL 3.x.
-        $views = $this->db->createSchemaManager()->listViews();
+        $views = $this->db->createSchemaManager()->introspectViews();
 
-        // DBAL 3.x keys views by name, whereas DBAL 4.x returns a list, so the name is read from the view.
         foreach ($views as $view) {
-            $viewName = $view->getName();
+            $viewName = $view->getObjectName()->getUnqualifiedName()->getValue();
 
             if ($this->config->findView($viewName) === null) {
                 continue;
