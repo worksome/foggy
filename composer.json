@@ -24,7 +24,7 @@
     "require-dev": {
         "pestphp/pest": "^4.1",
         "mockery/mockery": "^1.6",
-        "worksome/coding-style": "^4.0"
+        "worksome/coding-style": "^5.2"
     },
     "autoload": {
         "psr-4": {
