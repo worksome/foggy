@@ -1,26 +1,28 @@
 name: Tests
 
 on:
-  pull_request:
   push:
-    branches:
-      - master
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-  php-tests:
-    name: Testing on PHP ${{ matrix.php }}
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-        php: [8.5, 8.4]
-    steps:
+        php: [8.4, 8.5]
+        stability: [prefer-lowest, prefer-stable]
 
+    name: PHP ${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
+
+    steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
           php-version: ${{ matrix.php }}
           coverage: none
@@ -30,8 +32,8 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
-      - name: Install Composer dependencies
-        run: composer install --no-progress --prefer-dist --optimize-autoloader --ansi
+      - name: Install dependencies
+        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --ansi
 
-      - name: Run tests
+      - name: Execute tests
         run: composer test:unit
